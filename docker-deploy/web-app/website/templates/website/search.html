@@ -1,0 +1,18 @@
+{% extends "website/base.html" %}
+{% block content %}
+{% load crispy_forms_tags %}
+  <div style="margin: 5% 20%;">
+    <h1> Product Search </h1>
+    <form method="post">
+      {% csrf_token %}
+      <fieldset class="form-group">
+	{{ form|crispy }}
+      </fieldset>
+      <div class="form-group">
+	<button class="btn btn-outline-info" type="submit"> Submit </button>
+      </div>
+    </form>
+ </div>
+
+
+{% endblock content %}

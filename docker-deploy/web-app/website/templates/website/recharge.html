@@ -1,0 +1,16 @@
+{% extends "website/base.html" %}
+{% block content %}
+{% load crispy_forms_tags %}
+<div>
+  <h1>Your Balance is: {{ object.recharge }}</h1>
+  <form method="post">
+      {% csrf_token %}
+      <fieldset class="form-group">
+	{{ form|crispy }}
+      </fieldset>
+      <div class="form-group">
+	<button class="btn btn-outline-info" type="submit"> Recharge </button>
+      </div>
+    </form>
+</div>
+{% endblock content %}

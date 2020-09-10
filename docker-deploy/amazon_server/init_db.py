@@ -1,0 +1,90 @@
+import psycopg2
+
+def connect_db():
+    conn = psycopg2.connect(host="db", database="postgres", user="postgres", password="postgres", port="5432")
+    return conn
+
+def CreateTable(name, conn):
+    if name == "WH":
+        # create warehouse table
+        cursor = conn.cursor()
+        sql = '''DROP TABLE IF EXISTS website_warehouse;'''
+        cursor.execute(sql)
+        conn.commit()
+        WHsql = '''CREATE TABLE website_warehouse(
+        id  INT   PRIMARY KEY   NOT NULL,
+        x   INT   NOT NULL,
+        y   INT   NOT NULL);'''
+        cursor.execute(WHsql)
+        conn.commit()
+
+    if name == "PRODUCT":
+        # create product table
+        cursor = conn.cursor()
+        sql = '''DROP TABLE IF EXISTS website_product CASCADE;'''
+        cursor.execute(sql)
+        conn.commit()
+        WPsql = '''CREATE TABLE website_product(
+        "productID"   SERIAL   PRIMARY KEY    NOT NULL,
+        description   VARCHAR(100)            NOT NULL,
+        price         INT      DEFAULT 10      NOT NULL,
+        image         VARCHAR(100) DEFAULT 'loading.png');'''
+        cursor.execute(WPsql)
+        conn.commit()
+
+def InitProduct(conn):
+    cursor = conn.cursor()
+    sql = '''INSERT INTO website_product (description, price, image)
+    VALUES 
+    ('Coca Cola', 7, 'product_images/Coca Cola.png'),
+    ('Yogurt', 5, 'product_images/Yogurt.png'),
+    ('Ice Cream', 5, 'product_images/Ice Cream.png'),
+    ('Lemonade', 9, 'product_images/Lemonade.png'),
+    ('Pancake', 12, 'product_images/Pancake.png'),
+    ('Dumpling', 7, 'product_images/Dumpling.png'),
+    ('Milk Tea', 6, 'product_images/Milk Tea.png'),
+    ('Puffs', 3, 'product_images/Puffs.png'),
+    ('Hot Dog', 3, 'product_images/Hot Dog.png'),
+    ('Shampoo', 20, 'product_images/Shampoo.png'),
+    ('Conditioner', 15, 'product_images/Conditioner.png'),
+    ('Umbrella', 11, 'product_images/Umbrella.png'),
+    ('Apple Pie', 9, 'product_images/Apple Pie.png');'''
+    cursor.execute(sql)
+    conn.commit()
+
+def InitStock(conn):
+    # initialize all stock to be 0 at the beginning
+    cursor = conn.cursor()
+    sql = '''DROP TABLE IF EXISTS website_stock;'''
+    cursor.execute(sql)
+    conn.commit()
+    sql='''CREATE TABLE website_stock(
+    warehouse_id INT DEFAULT 0 NOT NULL,
+    product_id INT DEFAULT 0 NOT NULL,
+    stock INT DEFAULT 0 NOT NULL);'''
+    cursor.execute(sql)
+    conn.commit()
+    sql = '''SELECT website_warehouse.id FROM website_warehouse;'''
+    cursor.execute(sql)
+    warehouse_ids = cursor.fetchall()
+    sql = '''SELECT "productID" FROM website_product;'''
+    cursor.execute(sql)
+    product_ids = cursor.fetchall()
+    for warehouse_id in warehouse_ids:
+        for product_id in product_ids:
+            sql = '''INSERT INTO website_stock(warehouse_id, product_id, stock) 
+            VALUES (%s, %s, 0);'''
+            cursor.execute(sql, (warehouse_id, product_id))
+            conn.commit()
+
+def InitWH(conn):
+    cursor = conn.cursor()
+    sql = '''INSERT INTO website_warehouse (id, x, y) 
+    VALUES 
+    (1, 10, 10),
+    (2, 20, 20),
+    (3, 30, 30),
+    (4, 40, 40),
+    (5, 50, 50);'''
+    cursor.execute(sql)
+    conn.commit()

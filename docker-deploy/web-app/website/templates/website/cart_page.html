@@ -1,0 +1,45 @@
+{% extends "website/base.html" %}
+{% block content %}
+{% for item in items %}
+         <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="text-muted" href="{% url 'product-detail' item.product.productID %}"> {{ item.product.description }}</a>
+            </div>
+            <p class="article-content">Qty: {{ item.count }}</p>
+
+	   <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'delete_cart' item.id %}">Remove</a>
+	  </div>
+        </article>
+	{% endfor %}
+
+	 {% if null %}
+	 <a class="btn btn-outline-info" style="float:middle" href="{% url 'home' %}"> Go Shopping!</a>
+	 {% else %}
+	 
+	 <a class="btn btn-outline-info" style="float:right" href="{% url 'order-create' %}"><p class="article-content" style="float:right">Total Price: {{ price }}</p><p>Check Out</p></a>
+	 {% endif %}
+	 
+	{% if is_paginated %}
+
+        {% if page_obj.has_previous %}
+          <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+          <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+          {% if page_obj.number == num %}
+            <a class="btn btn-info mb-4" href="?page={{num}}">{{ num }}</a>
+          {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+            <a class="btn btn-outline-info mb-4" href="?page={{num}}">{{ num }}</a>
+          {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+          <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+          <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+        {% endif %}
+
+    {% endif %}
+	
+{% endblock content %}

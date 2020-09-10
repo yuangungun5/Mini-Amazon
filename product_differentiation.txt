@@ -1,0 +1,16 @@
+Product Differentiations
+
+1. Shopping Cart
+
+After user logs in, there is a “MyCart” on the right side of header. When the cart is empty, then on the cart page, there is a button called “Go shopping!”. When clicking on the shopping button, the page will turn to product list for user to select. When user checks detail of a product, there is a “Add to Cart” button, after clicking on this button, user will need to enter the quantity to purchase. If this product is not needed anymore, user can remove it on the cart page. The shopping cart can accumulate products and calculate total price of the products user wants to buy.  
+  
+2. Account Balance
+
+User can check the account balance on the account page. After clicking on “Account Balance”, user can see the current balance and make account recharge. When checking out on the cart page, if the balance is not sufficient, the payment will be interrupted and webpage will turn to recharge page and alerts the user “Your balance is not sufficient!”.   
+  
+3. Wishlist
+
+User can add a product to wishlist on the product detail page after logging in so that it is convenient for purchasing later. After signing in, user can see the wishlist by clicking on the button on the top right.  
+ 
+4. Email
+Once order is placed, the order owner will be notified by an email that the order is created.  

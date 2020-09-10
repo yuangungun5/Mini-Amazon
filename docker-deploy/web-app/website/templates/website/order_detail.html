@@ -1,0 +1,27 @@
+{% extends "website/base.html" %}
+{% block content %}
+        <article class="media content-section">
+	  <div class="media-body">
+            <div class="article-metadata">
+	      <p><small class="text-muted">{{ order.timeCreated|date:"F d, Y"}}</small></h3></p>
+	      <p><h4><a class="article-content">Coordinate: ({{ order.coordinateX }}, {{order.coordinateY}})</a></h4></p>
+	      <p><a class="btn btn-outline-info" href="{% url 'query-status' order.id %}">Query Delivery</a></p>
+	      
+              <a class="mr-2">
+	      </a>
+            </div>
+
+	{% for item in items %}
+       	  <div>
+            <p><a class="article-content">Product Name: {{ item.product.description }}</a></p>
+	    <p><a class="article-content">Qty: {{ item.count }}</a></p>	   
+	    <br />
+	  </div>	  
+        
+	{% endfor %}
+	  
+	</div>	  
+       </article>
+	
+{% endblock content %}
+

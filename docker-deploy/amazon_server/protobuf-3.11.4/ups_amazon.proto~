@@ -1,0 +1,23 @@
+syntax="proto2";
+message ATruckCall{
+  required int64 package_id = 1;
+  required int32 whnum = 2;
+  required int32 dest_x = 5;
+  required int32 dest_y = 6;
+  required int64 seqnum = 7;
+}
+message UTruckArrived {
+  required int64 package_id = 1;
+  required int32 whnum = 2;
+  required int32 truck_id = 3;
+  required int64 seq_num = 4;
+}
+message ALoaded {
+  required int64 shipid = 1;
+  required int32 truckid = 2;
+  required int64 seqnum = 3;
+}
+message UDelivered {
+  required int64 packageid = 1;
+  required int32 truckid =2;
+}

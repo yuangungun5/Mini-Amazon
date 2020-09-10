@@ -1,0 +1,11 @@
+1. We found when user tried to update account with invalid form fields, the webpage will alert for returning None object. That is because we only define the following steps for form.valid(), and then we fixed this bug.
+
+2. We used filter(description__contains = name) at first, but it requires user inputs the correct capital character, which is not user-friendly and always returns no results. Therefore, we changed condition to description__icontains = name
+
+3. We found if the stock is preset to a positive number and then client bought this product, amazon server would process as the enough stock situation so that it will call truck for packing directly, but world never saw this product before, then there will be an error response. We solved this problem by setting stock of every product to be 0 as server starts. 
+
+4. When flakiness is adjusted to be higher, message loss become more frequent so that world might not be able to receive our requests. To avoid this problem, we use select to set a time limit, when the time period expires but still receiving no response, the message will be sent again.
+
+5. Originally, we built warehouse database without the corresponding models in Django, but we found it not easy to modify the stock of products. Then we build a model for warehouse and stock to easily locate the warehouse and modify the stock of products in the corresponding warehouse.
+
+6. We found balance might become negative after checking out. As a limitation, when balance is not sufficient, checkout will not continue but turn to recharge page.
